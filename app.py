@@ -30,6 +30,9 @@ def index():
     return app.send_static_file('index.html')
 
 @app.route('/random')
+def random():
+    return app.send_static_file('Random.js')
+
 @app.route('/search')
 
 
