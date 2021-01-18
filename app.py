@@ -6,6 +6,10 @@ import requests
 import json
 from config import token_secret
 import os
+from boto.s3.connection importS3Connection
+
+s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
+
 
 
 
