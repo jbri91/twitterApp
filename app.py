@@ -5,8 +5,6 @@ api = Api(app)
 import requests
 import json
 from config import token_secret
-import os
-from boto.s3.connection import S3Connection
 
 
 
