@@ -31,7 +31,6 @@ def index():
 
 @app.route('/random')
 @app.route('/search')
-def home_page():
 
 @app.route('/', methods=['GET'])
 def hello():
