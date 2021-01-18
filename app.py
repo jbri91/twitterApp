@@ -32,9 +32,6 @@ def index():
 @app.route('/random')
 @app.route('/search')
 
-@app.route('/', methods=['GET'])
-def hello():
-    return jsonify({'Response': 'This is my Twitter Showcase App'})
 
 class SearchTweet(Resource):
     def get(self, tweet):
