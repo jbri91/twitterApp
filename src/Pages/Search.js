@@ -30,6 +30,7 @@ class Search extends React.Component {
       .then((data) =>
         this.setState({
           tweets: data.statuses,
+          tweetFinder: []
         })
       )
       .catch((err) => console.log(err));
@@ -48,6 +49,7 @@ class Search extends React.Component {
       .then((data) =>
         this.setState({
           tweetFinder: data.statuses,
+          tweets: ""
         })
       )
       .catch((err) => console.log(err));
