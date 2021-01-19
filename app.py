@@ -29,11 +29,6 @@ nasa = requests.get('https://api.twitter.com/1.1/search/tweets.json', params=pay
 def index():
     return app.send_static_file('index.html')
 
-@app.route('/random')
-def random():
-    return app.send_static_file('Random.js')
-
-@app.route('/search')
 
 
 class SearchTweet(Resource):
