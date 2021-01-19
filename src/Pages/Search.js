@@ -29,8 +29,9 @@ class Search extends React.Component {
       .then((response) => response.json())
       .then((data) =>
         this.setState({
+          tweetFinder: [],
           tweets: data.statuses,
-          tweetFinder: []
+          
         })
       )
       .catch((err) => console.log(err));
@@ -48,8 +49,9 @@ class Search extends React.Component {
       .then((res) => res.json())
       .then((data) =>
         this.setState({
+          tweets: "",
           tweetFinder: data.statuses,
-          tweets: ""
+          
         })
       )
       .catch((err) => console.log(err));
