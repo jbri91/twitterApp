@@ -145,7 +145,7 @@ class Random extends React.Component {
               retweet={this.state.ferrisTweets.retweet_count}
               likes={this.state.ferrisTweets.favorite_count}
               image={this.state.ferrisTweets.user.profile_image_url_https}
-              verified={this.state.ferrisTweet.user.verified}
+              verified={this.state.ferrisTweets.user.verified}
             />
           ) : null}
 
@@ -158,7 +158,7 @@ class Random extends React.Component {
               retweet={this.state.tedTweets.retweet_count}
               likes={this.state.tedTweets.favorite_count}
               image={this.state.tedTweets.user.profile_image_url_https}
-              verified={this.state.tedTweet.user.verified}
+              verified={this.state.tedTweets.user.verified}
             />
           ) : null}
 
@@ -171,7 +171,7 @@ class Random extends React.Component {
               retweet={this.state.nasaTweets.retweet_count}
               likes={this.state.nasaTweets.favorite_count}
               image={this.state.nasaTweets.user.profile_image_url_https}
-              verified={this.state.nasaTweet.user.verified}
+              verified={this.state.nasaTweets.user.verified}
             />
           ) : null}
 
@@ -184,7 +184,7 @@ class Random extends React.Component {
               retweet={this.state.gruberTweets.retweet_count}
               likes={this.state.gruberTweets.favorite_count}
               image={this.state.gruberTweets.user.profile_image_url_https}
-              verified={this.state.gruberTweet.user.verified}
+              verified={this.state.gruberTweets.user.verified}
             />
           ) : null}
         </div>
