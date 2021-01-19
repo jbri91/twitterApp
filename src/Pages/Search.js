@@ -29,9 +29,7 @@ class Search extends React.Component {
       .then((response) => response.json())
       .then((data) =>
         this.setState({
-          tweetFinder: [],
           tweets: data.statuses,
-          
         })
       )
       .catch((err) => console.log(err));
@@ -49,9 +47,7 @@ class Search extends React.Component {
       .then((res) => res.json())
       .then((data) =>
         this.setState({
-          tweets: "",
           tweetFinder: data.statuses,
-          
         })
       )
       .catch((err) => console.log(err));
@@ -100,6 +96,13 @@ class Search extends React.Component {
         />
       );
     }
+
+    if(this.state.tweets) {
+      tweetArray = null
+    } else if(this.state.tweetFinder) {
+      searchTweet = null
+    }
+    
 
     return (
       <div className="search">
