@@ -24,10 +24,14 @@ tedTalks = requests.get('https://api.twitter.com/1.1/search/tweets.json', params
 gruber = requests.get('https://api.twitter.com/1.1/search/tweets.json', params=payload4, headers=headers).json()
 nasa = requests.get('https://api.twitter.com/1.1/search/tweets.json', params=payload5, headers=headers).json() 
 
-
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
+    
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
 
 
 
