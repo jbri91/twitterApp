@@ -36,11 +36,19 @@ class Search extends React.Component {
     } else {
       alert('Please enter a valid username')
     }
+
+      
+  if(this.state.tweetFinder) {
+    this.setState({
+      tweetFinder: null
+    })
+  }
+
     e.target.reset()
     };
 
   alternateSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     let currentValue = this.state.value;
     if(currentValue > "") {
     fetch(`/api/searchtweet/${currentValue}`)
@@ -52,7 +60,15 @@ class Search extends React.Component {
       )
       .catch((err) => console.log(err));
   } else {alert('Please enter a valid search')}
+
+  if(this.state.tweets) {
+    this.setState({
+      tweets: null
+    })
+  }
+  
   e.target.reset()
+
 };
 
 
@@ -96,13 +112,7 @@ class Search extends React.Component {
         />
       );
     }
-
-    if(this.state.tweets) {
-      tweetArray = null
-    } else if(this.state.tweetFinder) {
-      searchTweet = null
-    }
-    
+  
 
     return (
       <div className="search">
