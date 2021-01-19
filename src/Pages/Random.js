@@ -35,8 +35,7 @@ class Random extends React.Component {
           })
         )
         .catch((error) => console.log(error));
-    }
-    else if (id === "3") {
+    } else if (id === "3") {
       fetch("/api/tedtalks")
         .then((res) => res.json())
         .then((tweets) =>
@@ -45,8 +44,7 @@ class Random extends React.Component {
           })
         )
         .catch((error) => console.log(error));
-    }
-    else if (id === "4") {
+    } else if (id === "4") {
       fetch("/api/nasa")
         .then((res) => res.json())
         .then((tweets) =>
@@ -55,9 +53,7 @@ class Random extends React.Component {
           })
         )
         .catch((error) => console.log(error));
-    }
-
-    else if (id === "5") {
+    } else if (id === "5") {
       fetch("/api/gruber")
         .then((res) => res.json())
         .then((tweets) =>
@@ -121,7 +117,7 @@ class Random extends React.Component {
       justifyContent: "space-around",
       alignItems: "center",
       flexDirection: "row",
-      boxShadow: '5px 10px #888888',
+      boxShadow: "5px 10px #888888",
     };
 
     return (
@@ -136,6 +132,7 @@ class Random extends React.Component {
               retweet={this.state.elonTweet.retweet_count}
               likes={this.state.elonTweet.favorite_count}
               image={this.state.elonTweet.user.profile_image_url_https}
+              verified={this.state.elonTweet.user.verified}
             />
           ) : null}
 
@@ -148,6 +145,7 @@ class Random extends React.Component {
               retweet={this.state.ferrisTweets.retweet_count}
               likes={this.state.ferrisTweets.favorite_count}
               image={this.state.ferrisTweets.user.profile_image_url_https}
+              verified={this.state.elonTweet.user.verified}
             />
           ) : null}
 
@@ -160,6 +158,7 @@ class Random extends React.Component {
               retweet={this.state.tedTweets.retweet_count}
               likes={this.state.tedTweets.favorite_count}
               image={this.state.tedTweets.user.profile_image_url_https}
+              verified={this.state.elonTweet.user.verified}
             />
           ) : null}
 
@@ -172,6 +171,7 @@ class Random extends React.Component {
               retweet={this.state.nasaTweets.retweet_count}
               likes={this.state.nasaTweets.favorite_count}
               image={this.state.nasaTweets.user.profile_image_url_https}
+              verified={this.state.elonTweet.user.verified}
             />
           ) : null}
 
@@ -184,6 +184,7 @@ class Random extends React.Component {
               retweet={this.state.gruberTweets.retweet_count}
               likes={this.state.gruberTweets.favorite_count}
               image={this.state.gruberTweets.user.profile_image_url_https}
+              verified={this.state.elonTweet.user.verified}
             />
           ) : null}
         </div>
