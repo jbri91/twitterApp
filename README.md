@@ -1,6 +1,6 @@
 # Twitter Showcase App Created with React, Flask RESTful API, Bootstrap 4
 
-Click [here](https://myflasktwitterapp.herokuapp.com/) to search for your favorite twitter accounts or tweet!
+Click [here](https://flasktwittershowcaseapp.herokuapp.com/) to search for your favorite twitter accounts or tweet!
 
 ![Twitter Showcase App](./src/Images/TwitterHomePage.png)
 
