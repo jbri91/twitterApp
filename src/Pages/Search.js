@@ -7,54 +7,42 @@ class Search extends React.Component {
     super(props);
     this.state = {
       value: "",
-      tweetFinder: [],
-      tweets: "",
+      tweets: [],
+      tweetFinder: []
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.alternateSubmit = this.alternateSubmit.bind(this);
+    this.handleUserNameSubmit = this.handleUserNameSubmit.bind(this);
+    this.handleTweetSubmit = this.handleTweetSubmit.bind(this);
   }
 
   handleChange(e) {
-    this.setState({
-      value: e.target.value,
-    });
+    this.setState({ value: e.target.value });
   }
 
-  handleSubmit = (e) => {
+  handleUserNameSubmit = (e) => {
     e.preventDefault();
     let currentValue = this.state.value.replace(" ", "");
-    if(currentValue > "") {
-    fetch(`/api/searchuser/${currentValue}`)
-      .then((response) => response.json())
-      .then((data) =>
-        this.setState({
-          tweets: data.statuses,
-        })
-      )
-      .catch((err) => console.log(err));
-    } else {
-      alert('Please enter a valid username')
-    }
-    e.target.reset()
-    };
+    currentValue > "" ? 
+      fetch(`/api/searchuser/${currentValue}`)
+        .then((res) => res.json())
+        .then((data) => this.setState({ tweets: [...data.statuses] }))
+        .catch((err) => console.log(err))
+     : alert("Please enter a valid username")
+     e.target.reset();
+  };
 
-  alternateSubmit = (e) => {
-    e.preventDefault(); 
+  handleTweetSubmit = (e) => {
+    e.preventDefault();
     let currentValue = this.state.value;
-    if(currentValue > "") {
-    fetch(`/api/searchtweet/${currentValue}`)
-      .then((res) => res.json())
-      .then((data) =>
-        this.setState({
-          tweetFinder: data.statuses,
-        })
-      )
-      .catch((err) => console.log(err));
-  } else {alert('Please enter a valid search')}  
-  e.target.reset()
-};
-
+    currentValue > "" 
+    ? fetch(`/api/searchtweet/${currentValue}`)
+        .then((res) => res.json())
+        .then((data) => this.setState({ tweetFinder: data.statuses }))
+        .catch((err) => console.log(err))
+    : 
+      alert("Please enter a valid search")
+      e.target.reset();
+  };
 
   render() {
     const cardStyle = {
@@ -65,53 +53,30 @@ class Search extends React.Component {
       alignItems: "center",
       flexDirection: "row",
     };
-    const tweetArray = [];
-    for (let i = 0; i < this.state.tweetFinder.length; i++) {
-      tweetArray.push(
-        <TwitterCard
-          key={[i]}
-          name={this.state.tweetFinder[i].user.name}
-          userName={this.state.tweetFinder[i].user.screen_name}
-          tweet={this.state.tweetFinder[i].text}
-          retweet={this.state.tweetFinder[i].retweet_count}
-          likes={this.state.tweetFinder[i].favorite_count}
-          image={this.state.tweetFinder[i].user.profile_image_url_https}
-          verified={this.state.tweetFinder[i].user.verified}
-        />
-      );
-    }
+ 
 
-    const searchTweet = [];
-    for (let i = 0; i < this.state.tweets.length; i++) {
-      searchTweet.push(
-        <TwitterCard
-          key={[i]}
-          name={this.state.tweets[i].user.name}
-          userName={this.state.tweets[i].user.screen_name}
-          tweet={this.state.tweets[i].text}
-          retweet={this.state.tweets[i].retweet_count}
-          likes={this.state.tweets[i].favorite_count}
-          image={this.state.tweets[i].user.profile_image_url_https}
-          verified={this.state.tweets[i].user.verified}
-        />
-      );
-    }
-  
+    const userTweets = this.state.tweets.map(tweet => (
+      <TwitterCard key={tweet.id} tweets={tweet} />
+    ))
+
+    const finderTweets = this.state.tweetFinder.map(tweet => (
+      <TwitterCard key={tweet.id} tweets={tweet} />
+    ))
 
     return (
       <div className="search">
         <div style={cardStyle}>
           <div style={{ display: "flex" }}>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleUserNameSubmit}>
               <UserInput
                 placeholder="Find User By Username"
                 name="findUser"
                 handleChange={this.handleChange}
-                handleSubmit={this.handleSubmit}
+                handleUserNameSubmit={this.handleUserNameSubmit}
               />
             </form>
             <br />
-            <form onSubmit={this.alternateSubmit}>
+            <form onSubmit={this.handleTweetSubmit}>
               <UserInput
                 placeholder="Find Tweet"
                 name="findTweet"
@@ -119,8 +84,8 @@ class Search extends React.Component {
               />
             </form>
           </div>
-          {this.state.tweets ? searchTweet : null}
-          {this.state.tweetFinder ? tweetArray : null}
+          {userTweets}
+          {finderTweets}
         </div>
       </div>
     );

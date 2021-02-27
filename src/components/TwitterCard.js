@@ -7,12 +7,12 @@ import Share from "../Images/Share.png";
 import Settings from "../Images/Settings.png";
 import BlueCheck from "../Images/BlueCheck.png";
 
-function TwitterCard(props) {
+function TwitterCard({ tweets }) {
   return (
     <div >
-      <Card id={props.id} style={{ width: "35rem", margin: "35px", cursor:'pointer'}} className="shadow-lg p-3 mb-5 bg-white rounded" >
+      <Card id={tweets.id} style={{ width: "35rem", margin: "35px", cursor:'pointer'}} className="shadow-lg p-3 mb-5 bg-white rounded" >
         <Card.Body>
-          <img alt='Profile' style={{ borderRadius: "50%" }} src={props.image}></img>
+          <img alt='Profile' style={{ borderRadius: "50%" }} src={tweets.user.profile_image_url}></img>
           <img
             alt="setting"
             variant="top"
@@ -20,10 +20,10 @@ function TwitterCard(props) {
             style={{ marginLeft: "450px" }}
           />
           <Card.Title style={{ fontSize: "15px", fontWeight: "bolder" }}>
-            {props.name} { props.verified ? <img alt="blue check" variant="top" src={BlueCheck} /> : null}
-            <p style={{ fontSize: "15px", color: "gray" }}>@{props.userName}</p>
+            {tweets.user.name} { tweets.user.verified ? <img alt="blue check" variant="top" src={BlueCheck} /> : null}
+            <p style={{ fontSize: "15px", color: "gray" }}>@{tweets.user.screen_name}</p>
           </Card.Title>
-          <Card.Text>{props.tweet}</Card.Text>
+          <Card.Text>{tweets.text}</Card.Text>
           <div
             className="twitterIcons"
             style={{
@@ -33,13 +33,13 @@ function TwitterCard(props) {
             }}
           >
             <p>
-              <img alt="comment" variant="top" src={Comment} /> {props.comments}
+              <img alt="comment" variant="top" src={Comment} /> {tweets.comments}
             </p>
             <p>
-              <img alt="retweet" variant="top" src={Retweet} /> {props.retweet}
+              <img alt="retweet" variant="top" src={Retweet} /> {tweets.retweet_count}
             </p>
             <p>
-              <img alt="heart" variant="top" src={HeartImage} /> {props.likes}
+              <img alt="heart" variant="top" src={HeartImage} /> {tweets.favorite_count}
             </p>
             <p>
               <img alt="share" variant="top" src={Share} />
