@@ -5,7 +5,7 @@ class Random extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      randomUsers: ["elonmusk", "nasa", "gruber", "tedtalks", "tferris"],
+      randomUsers: ["elonmusk", "nasa", "gruber", "tedtalks", "tferriss"],
       randomTweets: [],
     };
     this.handleClick = this.handleClick.bind(this);
