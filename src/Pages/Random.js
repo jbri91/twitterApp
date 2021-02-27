@@ -5,108 +5,32 @@ class Random extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      elonTweet: null,
-      ferrisTweets: null,
-      tedTweets: null,
-      nasaTweets: null,
-      gruberTweets: null,
+      randomUsers: ["elonmusk", "nasa", "gruber", "tedtalks", "tferris"],
+      randomTweets: [],
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e) {
-    e.preventDefault();
-    let id = e.target.offsetParent.id;
-    if (id === "1") {
-      fetch("/api/elonmusk")
-        .then((re) => re.json())
-        .then((tweets) =>
-          this.setState({
-            elonTweet: tweets.statuses[Math.floor(Math.random() * 20)],
-          })
-        )
-        .catch((error) => console.log(error));
-    } else if (id === "2") {
-      fetch("/api/timferris")
-        .then((res) => res.json())
-        .then((tweets) =>
-          this.setState({
-            ferrisTweets: tweets.statuses[Math.floor(Math.random() * 20)],
-          })
-        )
-        .catch((error) => console.log(error));
-    } else if (id === "3") {
-      fetch("/api/tedtalks")
-        .then((res) => res.json())
-        .then((tweets) =>
-          this.setState({
-            tedTweets: tweets.statuses[Math.floor(Math.random() * 20)],
-          })
-        )
-        .catch((error) => console.log(error));
-    } else if (id === "4") {
-      fetch("/api/nasa")
-        .then((res) => res.json())
-        .then((tweets) =>
-          this.setState({
-            nasaTweets: tweets.statuses[Math.floor(Math.random() * 20)],
-          })
-        )
-        .catch((error) => console.log(error));
-    } else if (id === "5") {
-      fetch("/api/gruber")
-        .then((res) => res.json())
-        .then((tweets) =>
-          this.setState({
-            gruberTweets: tweets.statuses[Math.floor(Math.random() * 20)],
-          })
-        )
-        .catch((error) => console.log(error));
-    }
+  handleClick(screenName) {
+    fetch(`/api/random-tweet/${screenName}`)
+      .then((res) => res.json())
+      .then((tweet) => this.setState({ randomUsers: tweet }))
+      .catch((error) => console.log(error));
   }
 
   async componentDidMount() {
-    await fetch("/api/elonmusk")
-      .then((re) => re.json())
-      .then((tweets) =>
-        this.setState({
-          elonTweet: tweets.statuses[Math.floor(Math.random() * 20)],
+    this.state.randomUsers.forEach((username) => {
+      fetch(`/api/random-tweet/${username}`)
+        .then((res) => res.json())
+        .then((tweet) => {
+          this.setState((prevState) => {
+            return {
+              randomTweets: [...prevState.randomTweets, tweet]
+            };
+          });
         })
-      )
-      .catch((error) => console.log(error));
-    await fetch("/api/timferris")
-      .then((res) => res.json())
-      .then((tweets) =>
-        this.setState({
-          ferrisTweets: tweets.statuses[Math.floor(Math.random() * 20)],
-        })
-      )
-      .catch((error) => console.log(error));
-    await fetch("/api/tedtalks")
-      .then((res) => res.json())
-      .then((tweets) =>
-        this.setState({
-          tedTweets: tweets.statuses[Math.floor(Math.random() * 20)],
-        })
-      )
-      .catch((error) => console.log(error));
-    await fetch("/api/nasa")
-      .then((res) => res.json())
-      .then((tweets) =>
-        this.setState({
-          nasaTweets: tweets.statuses[Math.floor(Math.random() * 20)],
-        })
-      )
-      .catch((error) => console.log(error));
-
-    await fetch("/api/gruber")
-      .then((res) => res.json())
-      .then((tweets) =>
-        this.setState({
-          gruberTweets: tweets.statuses[Math.floor(Math.random() * 20)],
-        })
-      )
-      .catch((error) => console.log(error));
+        .catch((error) => console.log(error));
+    });
   }
 
   render() {
@@ -120,74 +44,17 @@ class Random extends React.Component {
       boxShadow: "5px 10px #888888",
     };
 
+    const cards = this.state.randomTweets?.map((tweetCard) => (
+      <TwitterCard
+        key={tweetCard.id}
+        tweets={tweetCard}
+        handleClick={this.handleClick}
+      />
+    ));
+
     return (
       <div onClick={this.handleClick} className="random">
-        <div style={cardStyle}>
-          {this.state.elonTweet !== null ? (
-            <TwitterCard
-              id="1"
-              name={this.state.elonTweet.user.name}
-              userName={this.state.elonTweet.user.screen_name}
-              tweet={this.state.elonTweet.text}
-              retweet={this.state.elonTweet.retweet_count}
-              likes={this.state.elonTweet.favorite_count}
-              image={this.state.elonTweet.user.profile_image_url_https}
-              verified={this.state.elonTweet.user.verified}
-            />
-          ) : null}
-
-          {this.state.ferrisTweets !== null ? (
-            <TwitterCard
-              id="2"
-              name={this.state.ferrisTweets.user.name}
-              userName={this.state.ferrisTweets.user.screen_name}
-              tweet={this.state.ferrisTweets.text}
-              retweet={this.state.ferrisTweets.retweet_count}
-              likes={this.state.ferrisTweets.favorite_count}
-              image={this.state.ferrisTweets.user.profile_image_url_https}
-              verified={this.state.ferrisTweets.user.verified}
-            />
-          ) : null}
-
-          {this.state.tedTweets !== null ? (
-            <TwitterCard
-              id="3"
-              name={this.state.tedTweets.user.name}
-              userName={this.state.tedTweets.user.screen_name}
-              tweet={this.state.tedTweets.text}
-              retweet={this.state.tedTweets.retweet_count}
-              likes={this.state.tedTweets.favorite_count}
-              image={this.state.tedTweets.user.profile_image_url_https}
-              verified={this.state.tedTweets.user.verified}
-            />
-          ) : null}
-
-          {this.state.nasaTweets !== null ? (
-            <TwitterCard
-              id="4"
-              name={this.state.nasaTweets.user.name}
-              userName={this.state.nasaTweets.user.screen_name}
-              tweet={this.state.nasaTweets.text}
-              retweet={this.state.nasaTweets.retweet_count}
-              likes={this.state.nasaTweets.favorite_count}
-              image={this.state.nasaTweets.user.profile_image_url_https}
-              verified={this.state.nasaTweets.user.verified}
-            />
-          ) : null}
-
-          {this.state.gruberTweets !== null ? (
-            <TwitterCard
-              id="5"
-              name={this.state.gruberTweets.user.name}
-              userName={this.state.gruberTweets.user.screen_name}
-              tweet={this.state.gruberTweets.text}
-              retweet={this.state.gruberTweets.retweet_count}
-              likes={this.state.gruberTweets.favorite_count}
-              image={this.state.gruberTweets.user.profile_image_url_https}
-              verified={this.state.gruberTweets.user.verified}
-            />
-          ) : null}
-        </div>
+        <div style={cardStyle}>{cards}</div>
       </div>
     );
   }

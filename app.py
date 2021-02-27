@@ -3,26 +3,21 @@ from flask_restful import Api, Resource
 app = Flask(__name__, static_folder='./build', static_url_path='/')
 api = Api(app)
 import requests
+from random import *
 import json
 from config import token_secret
 
 
 
 
-payload = {'q':'from:elonmusk', 'result_type':'recent', 'count': 20}
-payload2 = {'q':'from:tferriss', 'result_type':'recent', 'count': 20}
-payload3 = {'q':'from:TEDtalks', 'result_type':'recent', 'count': 20}
-payload4 = {'q':'from:gruber', 'result_type':'recent', 'count': 20}
-payload5 = {'q':'from:nasa', 'result_type':'recent', 'count': 20}
+# payload = {'q':'from:elonmusk', 'result_type':'recent', 'count': 20}
+# payload2 = {'q':'from:tferriss', 'result_type':'recent', 'count': 20}
+# payload3 = {'q':'from:TEDtalks', 'result_type':'recent', 'count': 20}
+# payload4 = {'q':'from:gruber', 'result_type':'recent', 'count': 20}
+# payload5 = {'q':'from:nasa', 'result_type':'recent', 'count': 20}
 
 
 headers = {'Authorization': token_secret, 'Accept' : 'application/json', 'Content-Type':'application/json'}
-
-elonMusk = requests.get('https://api.twitter.com/1.1/search/tweets.json', params=payload, headers=headers).json()
-timFerris = requests.get('https://api.twitter.com/1.1/search/tweets.json', params=payload2, headers=headers).json()
-tedTalks = requests.get('https://api.twitter.com/1.1/search/tweets.json', params=payload3, headers=headers).json()
-gruber = requests.get('https://api.twitter.com/1.1/search/tweets.json', params=payload4, headers=headers).json()
-nasa = requests.get('https://api.twitter.com/1.1/search/tweets.json', params=payload5, headers=headers).json() 
 
 @app.errorhandler(404)
 def not_found(e):
@@ -31,9 +26,6 @@ def not_found(e):
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
-
-
-
 
 class SearchTweet(Resource):
     def get(self, tweet):
@@ -55,40 +47,16 @@ class SearchUser(Resource):
 api.add_resource(SearchUser, '/api/searchuser/<string:user>')
 
 
-class ElonTweets(Resource):
-    def get(self):
-        return jsonify(elonMusk)
+class RandomTweet(Resource):
+    def get(self, user):
+        payload6 = {'q': 'from:' + user, 
+        'result_type': 'recent',
+        'count': 20}
+        results = requests.get('https://api.twitter.com/1.1/search/tweets.json', params=payload6, headers=headers).json()
+        number = randint(1, 20)
+        return jsonify(results['statuses'][number])
 
-api.add_resource(ElonTweets, '/api/elonmusk')
-
-class TimTweets(Resource):
-    def get(self):
-        return jsonify(timFerris)
-
-api.add_resource(TimTweets, '/api/timferris')
-
-class TedTweets(Resource):
-    def get(self):
-        return jsonify(tedTalks)
-
-api.add_resource(TedTweets, '/api/tedtalks')
-
-
-class GruberTweets(Resource):
-    def get(self):
-        return jsonify(gruber)
-
-api.add_resource(GruberTweets, '/api/gruber')
-
-
-
-class NasaTweets(Resource):
-    def get(self):
-        return jsonify(nasa)
-
-api.add_resource(NasaTweets, '/api/nasa')
-
-
+api.add_resource(RandomTweet, '/api/random-tweet/<string:user>')
 
 if __name__=="__main__":
     app.run(debug=True)
