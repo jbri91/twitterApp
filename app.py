@@ -51,9 +51,9 @@ class RandomTweet(Resource):
     def get(self, user):
         payload6 = {'q': 'from:' + user, 
         'result_type': 'recent',
-        'count': 20}
+        'count': 10}
         results = requests.get('https://api.twitter.com/1.1/search/tweets.json', params=payload6, headers=headers).json()
-        number = randint(1, 20)
+        number = randint(1, 10)
         return jsonify(results['statuses'][number])
 
 api.add_resource(RandomTweet, '/api/random-tweet/<string:user>')
