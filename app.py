@@ -3,18 +3,10 @@ from flask_restful import Api, Resource
 app = Flask(__name__, static_folder='./build', static_url_path='/')
 api = Api(app)
 import requests
-from random import *
+from random import randint
 import json
 from config import token_secret
 
-
-
-
-# payload = {'q':'from:elonmusk', 'result_type':'recent', 'count': 20}
-# payload2 = {'q':'from:tferriss', 'result_type':'recent', 'count': 20}
-# payload3 = {'q':'from:TEDtalks', 'result_type':'recent', 'count': 20}
-# payload4 = {'q':'from:gruber', 'result_type':'recent', 'count': 20}
-# payload5 = {'q':'from:nasa', 'result_type':'recent', 'count': 20}
 
 
 headers = {'Authorization': token_secret, 'Accept' : 'application/json', 'Content-Type':'application/json'}
