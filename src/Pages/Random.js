@@ -18,14 +18,14 @@ class Random extends React.Component {
       .catch((error) => console.log(error));
   }
 
-  async componentDidMount() {
+   componentDidMount() {
     this.state.randomUsers.forEach((username) => {
-      await fetch(`/api/random-tweet/${username}`)
+       fetch(`/api/random-tweet/${username}`)
         .then((res) => res.json())
         .then((tweet) => {
           this.setState((prevState) => {
             return {
-              randomTweets: [...prevState.randomTweets, tweet],
+              randomTweets?: [...prevState.randomTweets, tweet],
             };
           });
         })
