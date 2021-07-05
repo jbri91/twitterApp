@@ -20,12 +20,12 @@ class Random extends React.Component {
 
   async componentDidMount() {
     this.state.randomUsers.forEach((username) => {
-      fetch(`/api/random-tweet/${username}`)
+      await fetch(`/api/random-tweet/${username}`)
         .then((res) => res.json())
         .then((tweet) => {
           this.setState((prevState) => {
             return {
-              randomTweets: [...prevState.randomTweets, tweet]
+              randomTweets: [...prevState.randomTweets, tweet],
             };
           });
         })
